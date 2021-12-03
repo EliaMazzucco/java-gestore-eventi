@@ -49,7 +49,7 @@ public class Evento {
 	/// metodi private///
 
 	private int verificaPosti() throws IllegalArgumentException {
-		if (postiTotali < 1){
+		if (postiTotali < 1) {
 			throw new IllegalArgumentException("Deve essere positivo");
 		}
 		return postiTotali;
@@ -58,49 +58,43 @@ public class Evento {
 	private boolean verificaData() {
 		boolean res = false;
 		LocalDate controlloData = LocalDate.now();
-		if(controlloData.isBefore(data)) {
+		if (controlloData.isBefore(data)) {
 			throw new IllegalArgumentException("Non è la data di oggi");
 		}
 		return res;
-		}
-	
+	}
 
 	/// metodi public///
 	public boolean prenota() {
 		boolean res = false;
-		
-		if(LocalDate.now().isAfter(data)) {
-			throw new IllegalArgumentException("Non è la data di oggi");		
-		}
-		else if( postiPrenotati > postiTotali){
+
+		if (LocalDate.now().isAfter(data)) {
+			throw new IllegalArgumentException("Non è la data di oggi");
+		} else if (postiPrenotati > postiTotali) {
 			throw new IllegalArgumentException("I posti non sono più disponibili");
+		} else {
 		}
-			else {
-		}
-		 postiPrenotati++;
+		postiPrenotati++;
 		return res;
-		
-		
+
 	}
+
 	public boolean disdici() {
 		boolean res = false;
-		
-		if(LocalDate.now().isAfter(data)) {
-			throw new IllegalArgumentException("Non è la data di oggi");		
-		}
-		else if( postiPrenotati > postiTotali){
+
+		if (LocalDate.now().isAfter(data)) {
+			throw new IllegalArgumentException("Non è la data di oggi");
+		} else if (postiPrenotati > postiTotali) {
 			throw new IllegalArgumentException("I posti non sono più disponibili");
+		} else {
 		}
-			else {
-		}
-		 postiPrenotati++;
+		postiPrenotati++;
 		return res;
 	}
 
 	@Override
 	public String toString() {
-		
-		return super.toString();
+		return data + "-" + titolo;
 	}
-	
+
 }
