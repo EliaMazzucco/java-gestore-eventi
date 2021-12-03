@@ -20,8 +20,6 @@ public class Evento {
 		this.postiTotali = postiTotali;
 		this.postiPrenotati = 0;
 	}
-	
-	
 
 	/// sgetter///
 
@@ -51,30 +49,29 @@ public class Evento {
 
 	/// metodi ///
 
-public boolean verificaData()throws IllegalArgumentException {
-		
+	public boolean verificaData() throws IllegalArgumentException {
+
 		boolean res = false;
 		LocalDate controlloData = LocalDate.now();
-		if (controlloData.isAfter(data)){
-			throw new IllegalArgumentException("Non è la data di oggi");
+		if (controlloData.isAfter(data)) {
+			throw new IllegalArgumentException("Inserisci una data corretta");
 		}
 		return res;
-		}
-	
-	public int verificaPosti() throws IllegalArgumentException {
-		if (postiTotali < 1) {
+	}
+
+	public boolean verificaPosti() throws IllegalArgumentException {
+		boolean res = false;
+		if (postiTotali < postiPrenotati) {
 			throw new IllegalArgumentException("Deve essere più di zero");
 		}
-		return postiTotali;
-		}
-	
-	
-	
+		return res;
+	}
+
 	public boolean prenota() throws IllegalArgumentException {
 		boolean res = false;
 
 		if (LocalDate.now().isAfter(data)) {
-			throw new IllegalArgumentException("Non è la data di oggi");
+			throw new IllegalArgumentException("Inserisci una data corretta");
 		} else if (postiPrenotati > postiTotali) {
 			throw new IllegalArgumentException("I posti non sono più disponibili");
 		} else {
@@ -84,28 +81,25 @@ public boolean verificaData()throws IllegalArgumentException {
 
 	}
 
-	public boolean disdici()throws IllegalArgumentException {
+	public boolean disdici() throws IllegalArgumentException {
 		boolean res = false;
 
 		if (LocalDate.now().isAfter(data)) {
-			throw new IllegalArgumentException("Non è la data di oggi");
+			throw new IllegalArgumentException("Inserisci una data corretta");
 		} else if (postiPrenotati > postiTotali) {
 			throw new IllegalArgumentException("I posti non sono più disponibili");
 		} else {
 		}
-		postiPrenotati++;
+		postiPrenotati--;
 		return res;
 	}
 
 	@Override
 	public String toString() {
-        String dataFormattata;
-        DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        dataFormattata = this.data.format(df);
-        return dataFormattata + " - " + this.titolo;
-    }
-
+		String dataFormattata;
+		DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		dataFormattata = this.data.format(df);
+		return dataFormattata + " - " + this.titolo;
 	}
-	
-	
-	
+
+}

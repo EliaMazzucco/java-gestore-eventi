@@ -26,31 +26,46 @@ public class Main {
 			int postiDisponibli = 100;
 
 			Evento evento = new Evento(titolo, dataEvento, postiDisponibli);
-
 			evento.verificaData();
-
+			;
 			System.out.print("Vuoi prenotare? (s/n)");
 			String rispUtente = scan.nextLine();
-			
-			boolean risp= false;
+			boolean risp = false;
+
 			if (rispUtente.equals("s")) {
-				risp=true;
-				System.out.println("Quanti posti vuoi prenotare?");
-				int numeroPosti = scan.nextInt();
-				evento.prenota();				
-			}else if(rispUtente.equals("n")){
-				risp=false;
+				risp = true;
+				String rispPrenotazione = "";
+				String rispDisdici = "";
+
+				do {
+					System.out.println("Vuoi aggiungere una prenotazione?(s/n)");
+					rispPrenotazione = scan.nextLine();
+					evento.prenota();
+					postiDisponibli --;
+				} while (rispPrenotazione.equals("s"));
+
+				do {
+					System.out.println("Vuoi disdire una prenotazione?(s/n)");
+					rispDisdici = scan.nextLine();
+					evento.disdici();
+					postiDisponibli ++;
+				} while (rispDisdici.equals("s"));
+
+				System.out.println("I posti prenotati sono: " + evento.getPostiPrenotati()
+						+ ", i posti disponibili sono: " + postiDisponibli);
+
+			}evento.verificaPosti();
+			if (rispUtente.equals("n")) {
+				risp = false;
 				System.out.println("Grazie e arrivederci");
-				
+
 			}
 
 		} catch (IllegalArgumentException Iae) {
-			System.out.println("Non puoi comprare il bglietto");
+			System.out.println(Iae);
 		}
 
 		boolean res = false;
-
-		
 
 		scan.close();
 
