@@ -1,6 +1,7 @@
 package org.generation.italy.eventi;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Evento {
 	/// proptrietà///
@@ -19,6 +20,8 @@ public class Evento {
 		this.postiTotali = postiTotali;
 		this.postiPrenotati = 0;
 	}
+	
+	
 
 	/// sgetter///
 
@@ -46,26 +49,28 @@ public class Evento {
 		return postiPrenotati;
 	}
 
-	/// metodi private///
+	/// metodi ///
 
-	private int verificaPosti() throws IllegalArgumentException {
-		if (postiTotali < 1) {
-			throw new IllegalArgumentException("Deve essere positivo");
-		}
-		return postiTotali;
-	}
-
-	private boolean verificaData() {
+public boolean verificaData()throws IllegalArgumentException {
+		
 		boolean res = false;
 		LocalDate controlloData = LocalDate.now();
-		if (controlloData.isBefore(data)) {
+		if (controlloData.isAfter(data)){
 			throw new IllegalArgumentException("Non è la data di oggi");
 		}
 		return res;
-	}
-
-	/// metodi public///
-	public boolean prenota() {
+		}
+	
+	public int verificaPosti() throws IllegalArgumentException {
+		if (postiTotali < 1) {
+			throw new IllegalArgumentException("Deve essere più di zero");
+		}
+		return postiTotali;
+		}
+	
+	
+	
+	public boolean prenota() throws IllegalArgumentException {
 		boolean res = false;
 
 		if (LocalDate.now().isAfter(data)) {
@@ -79,7 +84,7 @@ public class Evento {
 
 	}
 
-	public boolean disdici() {
+	public boolean disdici()throws IllegalArgumentException {
 		boolean res = false;
 
 		if (LocalDate.now().isAfter(data)) {
@@ -94,7 +99,13 @@ public class Evento {
 
 	@Override
 	public String toString() {
-		return data + "-" + titolo;
-	}
+        String dataFormattata;
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        dataFormattata = this.data.format(df);
+        return dataFormattata + " - " + this.titolo;
+    }
 
-}
+	}
+	
+	
+	

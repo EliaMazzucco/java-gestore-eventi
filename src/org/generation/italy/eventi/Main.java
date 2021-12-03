@@ -1,51 +1,59 @@
 package org.generation.italy.eventi;
-import java.time.LocalDate;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Main {
 
 	public static void main(String[] args) {
-		
-		
-		
+
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Che evento vuoi partecipare: ");
 		String titolo = scan.nextLine();
-		
-		System.out.println("Inserisci la data yyyy-MM-gg");
-		String data = scan.nextLine(); 		
-		LocalDate dateTime = LocalDate.parse(data);
-		
-		int postiDisponibli = 100;
-		
-		Evento evento = new Evento(titolo, dateTime, postiDisponibli);
-		
-		System.out.println(evento.toString());
-		
-		System.out.println("Vuoi prenotare?(s/n)");
-		String confermaPrenotazione = scan.nextLine();
-		
-		if(confermaPrenotazione.equalsIgnoreCase("s")) {
+
+		try {
+
+			System.out.print("Inserisci il giorno dell'evento: ");
+			int giorno = Integer.parseInt(scan.nextLine());
+			System.out.print("Inserisci il mese: ");
+			int mese = Integer.parseInt(scan.nextLine());
+
+			System.out.print("Inserisci l'anno: ");
+			int anno = Integer.parseInt(scan.nextLine());
+
+			LocalDate dataEvento = LocalDate.of(anno, mese, giorno);
+
+			int postiDisponibli = 100;
+
+			Evento evento = new Evento(titolo, dataEvento, postiDisponibli);
+
+			evento.verificaData();
+
+			System.out.print("Vuoi prenotare? (s/n)");
+			String rispUtente = scan.nextLine();
 			
-			System.out.println("Vuoi aggiungere una prenotazione? (s/n)");
-			String aggiungiPrenotazione = scan.nextLine();	
-			postiDisponibli--;
-			evento.prenota();			
+			boolean risp= false;
+			if (rispUtente.equals("s")) {
+				risp=true;
+				System.out.println("Quanti posti vuoi prenotare?");
+				int numeroPosti = scan.nextInt();
+				evento.prenota();				
+			}else if(rispUtente.equals("n")){
+				risp=false;
+				System.out.println("Grazie e arrivederci");
+				
+			}
+
+		} catch (IllegalArgumentException Iae) {
+			System.out.println("Non puoi comprare il bglietto");
 		}
+
+		boolean res = false;
+
 		
-		if(confermaPrenotazione.equalsIgnoreCase("n")) {
-			
-		}
-		
-		
-		
-		
-		
-		
-		
-		
+
 		scan.close();
+
 	}
 
 }
